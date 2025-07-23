@@ -55,14 +55,14 @@ jobs:
               org.opencontainers.image.version=${{ github.ref_name }}
               org.opencontainers.image.title=Jellyfin Newsletter - Dev version
               org.opencontainers.image.description=The development version of the Jellyfin Newsletter Docker image, used for testing and development purposes.
-              org.opencontainers.image.authors=SeaweedbrainCY <contact@seaweedbrain.xyz>
-              org.opencontainers.image.url=https://github.com/seaweedbraincy/jellyfin-newsletter
-              org.opencontainers.image.source=https://github.com/seaweedbraincy/jellyfin-newsletter
+              org.opencontainers.image.authors=jchasa <contact@seaweedbrain.xyz>
+              org.opencontainers.image.url=https://github.com/jchasa/jellyfin-newsletter
+              org.opencontainers.image.source=https://github.com/jchasa/jellyfin-newsletter
               org.opencontainers.image.licenses=MIT
-              org.opencontainers.image.documentation=https://github.com/seaweedbraincy/jellyfin-newsletter#readme
+              org.opencontainers.image.documentation=https://github.com/jchasa/jellyfin-newsletter#readme
             annotations: |
               org.opencontainers.image.description=The development version of the Jellyfin Newsletter Docker image, used for testing and development purposes.
-              org.opencontainers.image.source=https://github.com/seaweedbraincy/jellyfin-newsletter
+              org.opencontainers.image.source=https://github.com/jchasa/jellyfin-newsletter
             cache-from: type=gha
             cache-to: type=gha,mode=max
             platforms: linux/amd64,linux/arm64,linux/arm/v7

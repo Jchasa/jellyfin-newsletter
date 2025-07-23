@@ -60,16 +60,16 @@ jobs:
               org.opencontainers.image.version=${{ github.ref_name }}
               org.opencontainers.image.title="Jellyfin Newsletter" 
               org.opencontainers.image.description="A Dockerized newsletter service that connects to Jellyfin  API to notify your users of newly added media." 
-              org.opencontainers.image.authors="Seaweedbrain github.com/SeaweedbrainCY" 
-              org.opencontainers.image.url="https://github.com/seaweedbraincy/jellyfin-newsletter" 
-              org.opencontainers.image.source="https://github.com/seaweedbraincy/jellyfin-newsletter" 
+              org.opencontainers.image.authors="jchasa github.com/jchasa" 
+              org.opencontainers.image.url="https://github.com/jchasa/jellyfin-newsletter" 
+              org.opencontainers.image.source="https://github.com/jchasa/jellyfin-newsletter" 
               org.opencontainers.image.licenses="MIT" 
-              org.opencontainers.image.documentation="https://github.com/seaweedbraincy/jellyfin-newsletter#readme" 
-              org.opencontainers.image.vendor="Seaweedbrain" 
+              org.opencontainers.image.documentation="https://github.com/jchasa/jellyfin-newsletter#readme" 
+              org.opencontainers.image.vendor="jchasa" 
               org.opencontainers.image.base.name="python:3.12-slim"
             annotations: |
               org.opencontainers.image.description="A Dockerized newsletter service that connects to Jellyfin  API to notify your users of newly added media."
-              org.opencontainers.image.source=https://github.com/seaweedbraincy/jellyfin-newsletter
+              org.opencontainers.image.source=https://github.com/jchasa/jellyfin-newsletter
             cache-from: type=gha
             cache-to: type=gha,mode=max
             platforms: linux/amd64,linux/arm64,linux/arm/v7
