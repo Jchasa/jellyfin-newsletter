@@ -1,4 +1,4 @@
-# Jellyfin Newsletter - Custimized to my media server (not meant to be used outside of my server)
+# Jellyfin Newsletter - Custimized to my media server 
 
 <p align="center">
 <img src="https://github.com/SeaweedbrainCY/jellyfin-newsletter/actions/workflows/build_and_deploy.yml/badge.svg?branch="/>
