@@ -1,5 +1,6 @@
 import sys 
 from source import configuration, JellyfinAPI, TmdbAPI, email_template, email_controller
+from source.fetch_extra_media import get_recent_music_albums, get_recent_books
 import datetime as dt
 from source.configuration import logging
 from source.configuration_checker import check_configuration
@@ -91,6 +92,8 @@ def send_newsletter():
     folders = JellyfinAPI.get_root_items()
     watched_film_folders_id = []
     watched_tv_folders_id = []
+    watched_music_names = getattr(configuration.conf.jellyfin, "watched_music_folders", []) or []
+    watched_book_names  = getattr(configuration.conf.jellyfin, "watched_book_folders", []) or []
     for item in folders:
         if item["Name"] in configuration.conf.jellyfin.watched_film_folders :
            watched_film_folders_id.append(item["Id"])
@@ -98,13 +101,22 @@ def send_newsletter():
         elif item["Name"] in configuration.conf.jellyfin.watched_tv_folders :
             watched_tv_folders_id.append(item["Id"])
             logging.info(f"Folder {item['Name']} is watched for TV series.")
+        elif item["Name"] in watched_music_names:
+            logging.info(f"Folder {item['Name']} is watched for music albums.")
+        elif item["Name"] in watched_book_names:
+            logging.info(f"Folder {item['Name']} is watched for books/audiobooks.")
         else:
-            logging.warning(f"Folder {item['Name']} is not watched. Skipping. Add \"{item['Name']}\" in your watched folder to include it.")
+            logging.warning(f"Folder {item['Name']} is not watched. Skipping. Add \\"{item['Name']}\\" in your watched folder to include it.")
 
     total_movie = 0
     total_tv = 0
     movie_items = {}
     series_items = {}
+    # NEW Music/Books containers
+    music_items = {}
+    book_items = {}
+    total_music = 0
+    total_books = 0
 
 
     for folder_id in watched_film_folders_id:
@@ -154,9 +166,71 @@ def send_newsletter():
             
     populate_series_item_with_series_related_information(series_items=series_items, watched_tv_folders_id=watched_tv_folders_id)
     logging.debug("Series populated : " + str(series_items))
-    if len(movie_items) + len(series_items) > 0:
-        template = email_template.populate_email_template(movies=movie_items, series=series_items, total_tv=total_tv, total_movie=total_movie)
 
+    # NEW: fetch Music albums
+    try:
+        music_list = get_recent_music_albums(
+            configuration.conf.jellyfin.url,
+            configuration.conf.jellyfin.api_token,
+            watched_music_names,
+            configuration.conf.jellyfin.observed_period_days,
+        )
+        total_music = len(music_list)
+        for a in music_list:
+            music_items[a["name"]] = {
+                "year": a.get("year"),
+                "created_on": None,
+                "description": a.get("overview") or "No description available.",
+                "poster": a.get("image") or "https://redthread.uoregon.edu/files/original/affd16fd5264cab9197da4cd1a996f820e601ee4.png",
+                "artist": a.get("artist"),
+                "link": a.get("link"),
+            }
+    except Exception as e:
+        logging.error(f"Music fetch failed: {e}")
+
+    # NEW: fetch Books/Audiobooks
+    try:
+        book_list = get_recent_books(
+            configuration.conf.jellyfin.url,
+            configuration.conf.jellyfin.api_token,
+            watched_book_names,
+            configuration.conf.jellyfin.observed_period_days,
+        )
+        total_books = len(book_list)
+        for b in book_list:
+            book_items[b["title"]] = {
+                "year": b.get("year"),
+                "created_on": None,
+                "description": b.get("overview") or "No description available.",
+                "poster": b.get("image") or "https://redthread.uoregon.edu/files/original/affd16fd5264cab9197da4cd1a996f820e601ee4.png",
+                "author": b.get("author"),
+                "link": b.get("link"),
+            }
+    except Exception as e:
+        logging.error(f"Books fetch failed: {e}")
+    if len(movie_items) + len(series_items) + len(music_items) + len(book_items) > 0:
+        try:
+            template = email_template.populate_email_template(
+                movies=movie_items,
+                series=series_items,
+                total_tv=total_tv,
+                total_movie=total_movie,
+                music=music_items,
+                books=book_items,
+                total_music=total_music,
+                total_books=total_books,
+            )
+        except TypeError:
+            template = email_template.populate_email_template(
+                movies=movie_items,
+                series=series_items,
+                total_tv=total_tv,
+                total_movie=total_movie,
+		 music=music_items,           # already optional
+                books=book_items,            # already optional
+                total_music=total_music,     # <-- add
+                total_books=total_books,     # <-- add
+            )
 
         email_controller.send_email(template)
 
@@ -170,11 +244,7 @@ def send_newsletter():
 ##############################################
 Newsletter sent. 
 Thanks for using Jellyfin Newsletter!
-
-
-
-
-
+"""
 
 def newsletter_job():
     """
@@ -221,17 +291,4 @@ Jellyfin Newsletter is starting ....
     else:
         logging.info("Scheduler is disabled. Newsletter will run once, now.")
         send_newsletter()
-
-        
-
-
-
-
-
-
-
-    
-
-    
-
 

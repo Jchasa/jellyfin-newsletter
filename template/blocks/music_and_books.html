@@ -1,0 +1,41 @@
+{% if music_albums and music_albums|length > 0 %}
+<h2 style="margin:24px 0 8px;">New Music</h2>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    {% for album in music_albums %}
+    <td style="padding:8px; vertical-align:top; width:50%;">
+      <a href="{{ album.link }}">
+        {% if album.image %}
+        <img src="{{ album.image }}" alt="{{ album.name }}" width="280" style="display:block;border-radius:8px;">
+        {% endif %}
+        <div style="font-weight:bold; margin-top:8px;">{{ album.name }}</div>
+        <div style="color:#666;">{{ album.artist }}{% if album.year %} · {{ album.year }}{% endif %}</div>
+        {% if album.overview %}<div style="margin-top:6px; color:#444;">{{ album.overview }}</div>{% endif %}
+      </a>
+    </td>
+    {% if loop.index % 2 == 0 %}</tr><tr>{% endif %}
+    {% endfor %}
+  </tr>
+</table>
+{% endif %}
+
+{% if books and books|length > 0 %}
+<h2 style="margin:24px 0 8px;">New Books</h2>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    {% for bk in books %}
+    <td style="padding:8px; vertical-align:top; width:50%;">
+      <a href="{{ bk.link }}">
+        {% if bk.image %}
+        <img src="{{ bk.image }}" alt="{{ bk.title }}" width="280" style="display:block;border-radius:8px;">
+        {% endif %}
+        <div style="font-weight:bold; margin-top:8px;">{{ bk.title }}</div>
+        <div style="color:#666;">{{ bk.author }}{% if bk.year %} · {{ bk.year }}{% endif %}</div>
+        {% if bk.overview %}<div style="margin-top:6px; color:#444;">{{ bk.overview }}</div>{% endif %}
+      </a>
+    </td>
+    {% if loop.index % 2 == 0 %}</tr><tr>{% endif %}
+    {% endfor %}
+  </tr>
+</table>
+{% endif %}

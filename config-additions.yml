@@ -1,0 +1,5 @@
+# Add the following under 'jellyfin:' in your config/config.yml
+watched_music_folders:
+  - "music"
+watched_book_folders:
+  - "books"
