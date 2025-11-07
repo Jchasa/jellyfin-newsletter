@@ -38,7 +38,7 @@ jobs:
           uses: docker/login-action@v3
           with:
             registry: ghcr.io
-            username: ${{ jchasa }}
+            username: ${{ chastainaz@hotmail.com }}
             password: ${{ secrets.GH_PASSWORD }}
 
         - name: Build and push Docker images
@@ -47,8 +47,8 @@ jobs:
             context: .
             push: true
             tags: |
-              ghcr.io/${{ jchasa }}/jellyfin-newsletter:dev
-              ghcr.io/${{ jchasa }}/jellyfin-newsletter:${{ github.ref_name }}
+              ghcr.io/${{ chastainaz@hotmail.com }}/jellyfin-newsletter:dev
+              ghcr.io/${{ chastainaz@hotmail.com }}/jellyfin-newsletter:${{ github.ref_name }}
             labels: |
               org.opencontainers.image.revision=${{ env.GIT_COMMIT }}
               org.opencontainers.image.created=${{ env.DATE }}
