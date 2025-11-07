@@ -56,8 +56,8 @@ jobs:
               org.opencontainers.image.title=Jellyfin Newsletter - Dev version
               org.opencontainers.image.description=The development version of the Jellyfin Newsletter Docker image, used for testing and development purposes.
               org.opencontainers.image.authors=jchasa <contact@jchasa.xyz>
-              org.opencontainers.image.url=https://github.com/jchasa/jellyfin-newsletter
-              org.opencontainers.image.source=https://github.com/jchasa/jellyfin-newsletter
+              org.opencontainers.image.url=https://github.com/Jchasa/jellyfin-newsletter/tree/feat/music-books
+              org.opencontainers.image.source=https://github.com/Jchasa/jellyfin-newsletter/tree/feat/music-books
               org.opencontainers.image.licenses=MIT
               org.opencontainers.image.documentation=https://github.com/jchasa/jellyfin-newsletter#readme
             annotations: |
