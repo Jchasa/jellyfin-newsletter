@@ -38,8 +38,8 @@ jobs:
           uses: docker/login-action@v3
           with:
             registry: ghcr.io
-            username: ${{ secrets.USERNAME }}
-            password: ${{ secrets.GITHUB_TOKEN }}
+            username: ${{ jchasa }}
+            password: ${{ secrets.GH_PASSWORD }}
 
         - name: Build and push Docker images
           uses: docker/build-push-action@v6
@@ -55,7 +55,7 @@ jobs:
               org.opencontainers.image.version=${{ github.ref_name }}
               org.opencontainers.image.title=Jellyfin Newsletter - Dev version
               org.opencontainers.image.description=The development version of the Jellyfin Newsletter Docker image, used for testing and development purposes.
-              org.opencontainers.image.authors=jchasa <contact@seaweedbrain.xyz>
+              org.opencontainers.image.authors=jchasa <contact@jchasa.xyz>
               org.opencontainers.image.url=https://github.com/jchasa/jellyfin-newsletter
               org.opencontainers.image.source=https://github.com/jchasa/jellyfin-newsletter
               org.opencontainers.image.licenses=MIT
