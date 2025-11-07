@@ -47,8 +47,8 @@ jobs:
             context: .
             push: true
             tags: |
-              ghcr.io/${{ secrets.USERNAME }}/jellyfin-newsletter:dev
-              ghcr.io/${{ secrets.USERNAME }}/jellyfin-newsletter:${{ github.ref_name }}
+              ghcr.io/${{ jchasa }}/jellyfin-newsletter:dev
+              ghcr.io/${{ jchasa }}/jellyfin-newsletter:${{ github.ref_name }}
             labels: |
               org.opencontainers.image.revision=${{ env.GIT_COMMIT }}
               org.opencontainers.image.created=${{ env.DATE }}
